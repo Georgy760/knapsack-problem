@@ -108,6 +108,56 @@ public class EntryPoint
         
         
         PrintResults(input4);
+        
+        /*
+        String line;
+        //Pass the file path and file name to the StreamReader constructor
+        StreamReader sr = new StreamReader("C:\\C_Projects\\Backpack\\BackpackTask\\task1.txt");
+        //Read the first line of text
+        line = sr.ReadLine();
+        var stringData = line.Split(" ");
+        var dataSize = int.Parse(stringData[1]);
+        Console.WriteLine($"DataSize: {dataSize}");
+        var maxCapacity = int.Parse(stringData[0]);
+
+        //Continue to read until you reach end of file
+        int i = 0;
+        line = sr.ReadLine();
+        List<Item> items = new List<Item>();
+        while (line != null || i > dataSize)
+        {
+            stringData = line.Split(" ");
+            Item item = new Item(i.ToString(), int.Parse(stringData[1]), int.Parse(stringData[0]));
+            items.Add(item);
+            Console.WriteLine($"\nI is: {i}\n");
+        
+
+            //write the line to console window
+            //Console.WriteLine(line);
+            i++;
+            //Read the next line
+            line = sr.ReadLine();
+        }
+        //close the file
+        sr.Close();
+        */
+        
+        var input5 = new KnapsackInput()
+        {
+            
+            Capacity = 16,
+            ExpectedResult = 90,
+            Items = new List<Item>()
+            {
+                new Item { Name = "1", Value = 40, Weight = 2 },
+                new Item { Name = "2", Value = 30, Weight = 5 },
+                new Item { Name = "3", Value = 50, Weight = 10 },
+                new Item { Name = "4", Value = 10, Weight = 5 }
+            }
+        };
+        
+        
+        PrintResults(input4);
     }
 
     public static void PrintResults(KnapsackInput input)
