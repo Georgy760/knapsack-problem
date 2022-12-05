@@ -21,11 +21,14 @@ namespace BackpackTask
         public Backpack(double _maxW)
         {
             maxW = _maxW;
+            Console.WriteLine("\nNew backpack:" +
+                              $"\nSize: {maxW}");
         }
         
         // создание всех наборов перестановок значений
         public void MakeAllSets(List<Item> items)
         {
+            Console.WriteLine("\nMakeAllSets");
             if (items.Count > 0)
                 CheckSet(items);
 
@@ -43,6 +46,7 @@ namespace BackpackTask
         // проверка, является ли данный набор лучшим решением задачи
         private void CheckSet(List<Item> items)
         {
+            Console.WriteLine("\nCheckSet");
             if (bestItems == null)
             {
                 if (CalcWeigth(items) <= maxW)
@@ -64,6 +68,7 @@ namespace BackpackTask
         // вычисляет общий вес набора предметов
         private double CalcWeigth(List<Item> items)
         {
+            Console.WriteLine("\nCalcWeigth");
             double sumW = 0;
 
             foreach(Item i in items)
@@ -78,6 +83,7 @@ namespace BackpackTask
         // вычисляет общую стоимость набора предметов
         private double CalcPrice(List<Item> items)
         {
+            Console.WriteLine("\nCalcPrice");
             double sumPrice = 0;
 
             foreach (Item i in items)
@@ -91,6 +97,7 @@ namespace BackpackTask
         // возвращает решение задачи (набор предметов)
         public List<Item> GetBestSet()
         {
+            Console.WriteLine("\nGetBestSet");
             return bestItems;
         }
     }
