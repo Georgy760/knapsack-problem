@@ -19,6 +19,10 @@ namespace BackpackTask
             name = _name;
             weigth = _weigth;
             price = _price;
+            Console.WriteLine("Added new item:" +
+                              $"\nName: {name}" +
+                              $"\nWeigth: {weigth}" +
+                              $"\nPrice: {price}");
         }
     }
 }
