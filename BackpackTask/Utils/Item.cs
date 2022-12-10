@@ -11,6 +11,12 @@
             this.Name = name;
             this.Value = value;
             this.Weight = weight;
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("Added new item:" +
+                              $"\nName: {this.Name}" +
+                              $"\nValue: {this.Value}" +
+                              $"\nWeight: {this.Weight}");
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
         public string Name { get; set; }

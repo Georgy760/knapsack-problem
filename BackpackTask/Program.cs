@@ -6,61 +6,13 @@ using System.IO;
 using Knapsack;
 using Knapsack.Solvers;
 using Knapsack.Utils;
-/*
-String line;
-try
-{
-    
-    //Pass the file path and file name to the StreamReader constructor
-    StreamReader sr = new StreamReader("C:\\C_Projects\\Backpack\\BackpackTask\\task1.txt");
-    //Read the first line of text
-    line = sr.ReadLine();
-    var stringData = line.Split(" ");
-    var dataSize = int.Parse(stringData[1]);
-    Console.WriteLine($"DataSize: {dataSize}");
-    var maxCapacity = int.Parse(stringData[0]);
-    Backpack backpack = new Backpack(maxCapacity);
-    
-    //Continue to read until you reach end of file
-    int i = 0;
-    line = sr.ReadLine();
-    List<Item> items = new List<Item>();
-    while (line != null || i > dataSize)
-    {
-        stringData = line.Split(" ");
-        Item item = new Item(i.ToString(), double.Parse(stringData[1]), double.Parse(stringData[0]));
-        items.Add(item);
-        Console.WriteLine($"\nI is: {i}\n");
-        
-
-        //write the line to console window
-        //Console.WriteLine(line);
-        i++;
-        //Read the next line
-        line = sr.ReadLine();
-    }
-    //close the file
-    sr.Close();
-    backpack.MakeAllSets(items);
-}
-catch(Exception e)
-{
-    Console.WriteLine("Exception: " + e.Message);
-}
-finally
-{
-    Console.WriteLine("Executing finally block.");
-}
-Console.WriteLine("\nStart backpack");
-
-Console.WriteLine("\nEnd backpack");*/
 public class EntryPoint
 {
     public static void Main()
     {
         /* var input1 = ReadInput("./../../SampleInputs/easy20.txt");
          PrintResults(input1);*/
-        var input2 = new KnapsackInput()
+        /*var input2 = new KnapsackInput()
         {
             Capacity = 18,
             ExpectedResult = 44,
@@ -106,13 +58,11 @@ public class EntryPoint
             }
         };
         
+        PrintResults(input4);*/
         
-        PrintResults(input4);
-        
-        /*
         String line;
         //Pass the file path and file name to the StreamReader constructor
-        StreamReader sr = new StreamReader("C:\\C_Projects\\Backpack\\BackpackTask\\task1.txt");
+        StreamReader sr = new StreamReader("C:\\task1.txt");
         //Read the first line of text
         line = sr.ReadLine();
         var stringData = line.Split(" ");
@@ -127,7 +77,7 @@ public class EntryPoint
         while (line != null || i > dataSize)
         {
             stringData = line.Split(" ");
-            Item item = new Item(i.ToString(), int.Parse(stringData[1]), int.Parse(stringData[0]));
+            Item item = new Item(i.ToString(), int.Parse(stringData[0]), int.Parse(stringData[1]));
             items.Add(item);
             Console.WriteLine($"\nI is: {i}\n");
         
@@ -140,24 +90,17 @@ public class EntryPoint
         }
         //close the file
         sr.Close();
-        */
+        
         
         var input5 = new KnapsackInput()
         {
             
-            Capacity = 16,
-            ExpectedResult = 90,
-            Items = new List<Item>()
-            {
-                new Item { Name = "1", Value = 40, Weight = 2 },
-                new Item { Name = "2", Value = 30, Weight = 5 },
-                new Item { Name = "3", Value = 50, Weight = 10 },
-                new Item { Name = "4", Value = 10, Weight = 5 }
-            }
+            Capacity = maxCapacity,
+            Items = items
         };
         
         
-        PrintResults(input4);
+        PrintResults(input5);
     }
 
     public static void PrintResults(KnapsackInput input)
@@ -169,7 +112,7 @@ public class EntryPoint
 
         Console.ForegroundColor = ConsoleColor.Green;
         Console.WriteLine("Max Capacity is {0}", input.Capacity);
-        Console.WriteLine("Expected result is {0}", input.ExpectedResult);
+        //Console.WriteLine("Expected result is {0}", input.ExpectedResult);
         Console.ForegroundColor = ConsoleColor.White;
         foreach (var solver in solvers)
         {
