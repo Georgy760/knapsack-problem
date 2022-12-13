@@ -11,7 +11,7 @@ public class EntryPoint
     public static void Main()
     {
         /* var input1 = ReadInput("./../../SampleInputs/easy20.txt");
-         PrintResults(input1);*/
+         PrintResults(input1);
         /*var input2 = new KnapsackInput()
         {
             Capacity = 18,
@@ -62,7 +62,7 @@ public class EntryPoint
         
         String line;
         //Pass the file path and file name to the StreamReader constructor
-        StreamReader sr = new StreamReader("C:\\task1.txt");
+        StreamReader sr = new StreamReader("C:\\test2.txt");
         //Read the first line of text
         line = sr.ReadLine();
         var stringData = line.Split(" ");
@@ -107,7 +107,8 @@ public class EntryPoint
     {
         IList<KnapsackSolver> solvers = new List<KnapsackSolver>()
         {
-            new DynamicProgrammingSolver(input.Items, input.Capacity)
+            new BranchAndBoundSolver(input.Items, input.Capacity), 
+            //new DynamicProgrammingSolver(input.Items, input.Capacity)
         };
 
         Console.ForegroundColor = ConsoleColor.Green;
