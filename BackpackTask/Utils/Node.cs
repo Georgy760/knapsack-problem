@@ -1,61 +1,53 @@
-﻿namespace Knapsack.Utils
+﻿namespace BackpackTask.Utils;
+
+public class Node : IComparable<Node>
 {
-    using System;
-    using System.Collections.Generic;
-
-    public class Node : IComparable<Node>
+    public Node()
     {
-        public Node()
+        TakenItems = new List<Item>();
+    }
+
+    public Node(Node parent)
+    {
+        Height = parent.Height + 1;
+        TakenItems = new List<Item>(parent.TakenItems);
+        Bound = parent.Bound;
+        Value = parent.Value;
+        Weight = parent.Weight;
+    }
+
+    public int Height { get; set; }
+
+    public IList<Item> TakenItems { get; set; }
+
+    public int Value { get; set; }
+
+    public int Weight { get; set; }
+
+    public double Bound { get; set; }
+
+    public int CompareTo(Node other)
+    {
+        return (int)(other.Bound - Bound);
+    }
+
+    public void ComputeBound(IList<Item> items, int capacity)
+    {
+        double w = Weight;
+        Bound = Value;
+        var index = Height;
+        Item currentItem;
+
+        do
         {
-            this.TakenItems = new List<Item>();
-        }
+            currentItem = items[index];
+            if (w + currentItem.Weight > capacity) break;
 
-        public Node(Node parent)
-        {
-            this.Height = parent.Height + 1;
-            this.TakenItems = new List<Item>(parent.TakenItems);
-            this.Bound = parent.Bound;
-            this.Value = parent.Value;
-            this.Weight = parent.Weight;
-        }
+            w += currentItem.Weight;
+            Bound += currentItem.Value;
+            index++;
+        } while (index < items.Count);
 
-        public int Height { get; set; }
-
-        public IList<Item> TakenItems { get; set; }
-
-        public int Value { get; set; }
-
-        public int Weight { get; set; }
-
-        public double Bound { get; set; }
-
-        public void ComputeBound(IList<Item> items, int capacity)
-        {
-            double w = this.Weight;
-            this.Bound = this.Value;
-            int index = this.Height;
-            Item currentItem;
-
-            do
-            {
-                currentItem = items[index];
-                if (w + currentItem.Weight > capacity)
-                {
-                    break;
-                }
-
-                w += currentItem.Weight;
-                this.Bound += currentItem.Value;
-                index++;
-            }
-            while (index < items.Count);
-
-            this.Bound += (capacity - w) * currentItem.Ratio;
-        }
-
-        public int CompareTo(Node other)
-        {
-            return (int)(other.Bound - this.Bound);
-        }
+        Bound += (capacity - w) * currentItem.Ratio;
     }
 }

@@ -1,132 +1,98 @@
-﻿// See https://aka.ms/new-console-template for more information
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using Knapsack;
-using Knapsack.Solvers;
-using Knapsack.Utils;
+﻿using System.Diagnostics;
+using BackpackTask.Solver;
+using BackpackTask.Utils;
+
+namespace BackpackTask;
+
 public class EntryPoint
 {
-    public static void Main()
+    public enum METHOD
     {
-        /* var input1 = ReadInput("./../../SampleInputs/easy20.txt");
-         PrintResults(input1);
-        /*var input2 = new KnapsackInput()
-        {
-            Capacity = 18,
-            ExpectedResult = 44,
-            Items =
-                new List<Item>()
-                {
-                    new Item { Name = "fourth", Weight = 4, Value = 12 },
-                    new Item { Name = "third", Weight = 6, Value = 10 },
-                    new Item { Name = "second", Weight = 5, Value = 8 },
-                    new Item { Name = "cheese", Weight = 7, Value = 11 },
-                    new Item { Name = "first", Weight = 3, Value = 14 },
-                    new Item { Name = "potatos", Weight = 1, Value = 7 },
-                    new Item { Name = "bear", Weight = 6, Value = 9 }
-                }
-        };
-        PrintResults(input2);
-
-        var input3 = new KnapsackInput()
-        {
-            Capacity = 4,
-            ExpectedResult = 6,
-            Items = new List<Item>()
-            {
-                new Item() { Name = "first", Value = 2, Weight = 1 },
-                new Item() { Name = "Second", Value = 3, Weight = 2 },
-                new Item() { Name = "Third", Value = 4, Weight = 3 },
-                new Item() { Name = "Fourth", Value = 5, Weight = 4 },
-                new Item() { Name = "Second", Value = 6, Weight = 5 }
-            }
-        };
-        PrintResults(input3);
-
-        var input4 = new KnapsackInput()
-        {
-            Capacity = 16,
-            ExpectedResult = 90,
-            Items = new List<Item>()
-            {
-                new Item { Name = "1", Value = 40, Weight = 2 },
-                new Item { Name = "2", Value = 30, Weight = 5 },
-                new Item { Name = "3", Value = 50, Weight = 10 },
-                new Item { Name = "4", Value = 10, Weight = 5 }
-            }
-        };
-        
-        PrintResults(input4);*/
-        
-        String line;
-        //Pass the file path and file name to the StreamReader constructor
-        StreamReader sr = new StreamReader("C:\\test2.txt");
-        //Read the first line of text
-        line = sr.ReadLine();
-        var stringData = line.Split(" ");
-        var dataSize = int.Parse(stringData[1]);
-        Console.WriteLine($"DataSize: {dataSize}");
-        var maxCapacity = int.Parse(stringData[0]);
-
-        //Continue to read until you reach end of file
-        int i = 0;
-        line = sr.ReadLine();
-        List<Item> items = new List<Item>();
-        while (line != null || i > dataSize)
-        {
-            stringData = line.Split(" ");
-            Item item = new Item(i.ToString(), int.Parse(stringData[0]), int.Parse(stringData[1]));
-            items.Add(item);
-            Console.WriteLine($"\nI is: {i}\n");
-        
-
-            //write the line to console window
-            //Console.WriteLine(line);
-            i++;
-            //Read the next line
-            line = sr.ReadLine();
-        }
-        //close the file
-        sr.Close();
-        
-        
-        var input5 = new KnapsackInput()
-        {
-            
-            Capacity = maxCapacity,
-            Items = items
-        };
-        
-        
-        PrintResults(input5);
+        DYNAMIC_PROGRAMMING,
+        BRANCH_AND_BOUND
     }
 
-    public static void PrintResults(KnapsackInput input)
+    private static readonly string path0 = @"./../../../SampleInputs/problem16.7test.txt"; //Both methods
+    private static readonly string path1 = @"./../../../SampleInputs/problem16.7.txt"; //Only branch&bound
+
+    public static void Main()
     {
-        IList<KnapsackSolver> solvers = new List<KnapsackSolver>()
+        var input0 = AddData(path0);
+        var input1 = AddData(path1);
+
+        PrintResults(input0, METHOD.DYNAMIC_PROGRAMMING);
+        PrintResults(input0, METHOD.BRANCH_AND_BOUND);
+        //PrintResults(input1, METHOD.DYNAMIC_PROGRAMMING);
+        PrintResults(input1, METHOD.BRANCH_AND_BOUND);
+    }
+
+    public static void PrintResults(KnapsackInput input, METHOD method)
+    {
+        KnapsackSolver solver = null;
+        switch (method)
         {
-            new BranchAndBoundSolver(input.Items, input.Capacity), 
-            //new DynamicProgrammingSolver(input.Items, input.Capacity)
-        };
+            case METHOD.BRANCH_AND_BOUND:
+                solver = new BranchAndBoundSolver(input.Items, input.Capacity);
+                break;
+            case METHOD.DYNAMIC_PROGRAMMING:
+                solver = new DynamicProgrammingSolver(input.Items, input.Capacity);
+                break;
+        }
+
 
         Console.ForegroundColor = ConsoleColor.Green;
         Console.WriteLine("Max Capacity is {0}", input.Capacity);
         //Console.WriteLine("Expected result is {0}", input.ExpectedResult);
         Console.ForegroundColor = ConsoleColor.White;
-        foreach (var solver in solvers)
+        var sw = new Stopwatch();
+
+        sw.Start();
+
+        var solution = solver?.Solve();
+
+        sw.Stop();
+
+        Console.WriteLine(solution);
+        Console.WriteLine("Elapsed = {0}\n", sw.Elapsed);
+    }
+
+    public static KnapsackInput AddData(string path)
+    {
+        string line;
+        var sr = new StreamReader(path);
+        line = sr.ReadLine();
+
+        var stringData = line.Split(" ");
+
+        var dataSize = int.Parse(stringData[1]);
+        Console.WriteLine($"DataSize: {dataSize}");
+
+        var maxCapacity = int.Parse(stringData[0]);
+
+        line = sr.ReadLine();
+
+        var i = 0;
+        var items = new List<Item>();
+        while (line != null || i > dataSize)
         {
-            Stopwatch sw = new Stopwatch();
-
-            sw.Start();
-
-            var solution = solver.Solve();
-
-            sw.Stop();
-
-            Console.WriteLine(solution);
-            Console.WriteLine("Elapsed = {0}\n", sw.Elapsed);
+            stringData = line.Split(" ");
+            var item = new Item(i.ToString(), int.Parse(stringData[0]), int.Parse(stringData[1]));
+            items.Add(item);
+            Console.WriteLine($"\nI is: {i}\n");
+            
+            i++;
+            line = sr.ReadLine();
         }
+
+        sr.Close();
+
+
+        var input = new KnapsackInput
+        {
+            Capacity = maxCapacity,
+            Items = items
+        };
+
+        return input;
     }
 }

@@ -1,32 +1,28 @@
-﻿namespace Knapsack
+﻿using BackpackTask.Utils;
+
+namespace BackpackTask.Solver;
+
+public abstract class KnapsackSolver
 {
-    using System.Collections.Generic;
-    using System.Linq;
-
-    using Knapsack.Utils;
-
-    public abstract class KnapsackSolver
+    protected KnapsackSolver(IList<Item> items, int capacity)
     {
-        protected KnapsackSolver(IList<Item> items, int capacity)
-        {
-            this.Items = items;
-            this.Capacity = capacity;
-        }
+        Items = items;
+        Capacity = capacity;
+    }
 
-        protected IList<Item> Items { get; set; }
+    protected IList<Item> Items { get; set; }
 
-        protected int Capacity { get; set; }
+    protected int Capacity { get; set; }
 
-        public abstract KnapsackSolution Solve();
+    public abstract KnapsackSolution Solve();
 
-        public double GetWeight(IList<Item> items)
-        {
-            return items.Sum(i => i.Weight);
-        }
+    public double GetWeight(IList<Item> items)
+    {
+        return items.Sum(i => i.Weight);
+    }
 
-        public double GetValue(IList<Item> items)
-        {
-            return items.Sum(i => i.Value);
-        }
+    public double GetValue(IList<Item> items)
+    {
+        return items.Sum(i => i.Value);
     }
 }

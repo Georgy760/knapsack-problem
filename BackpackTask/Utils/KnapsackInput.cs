@@ -1,18 +1,15 @@
-﻿namespace Knapsack.Utils
+﻿namespace BackpackTask.Utils;
+
+public class KnapsackInput
 {
-    using System.Collections.Generic;
-
-    public class KnapsackInput
+    public KnapsackInput()
     {
-        public KnapsackInput()
-        {
-            this.Items = new List<Item>();
-        }
-
-        public IList<Item> Items { get; set; }
-
-        public int Capacity { get; set; }
-
-        public int ExpectedResult { get; set; }
+        Items = new List<Item>();
     }
+
+    public IList<Item> Items { get; set; }
+
+    public int Capacity { get; set; }
+
+    public int ExpectedResult { get; set; }
 }

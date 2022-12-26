@@ -1,28 +1,24 @@
-﻿namespace Knapsack
+﻿using System.Text;
+using BackpackTask.Contracts;
+
+namespace BackpackTask.Utils;
+
+public class KnapsackSolution : IKnapsackSolution
 {
-    using System.Collections.Generic;
-    using System.Text;
+    public string Approach { get; set; }
 
-    using Knapsack.Contracts;
-    using Knapsack.Utils;
+    public IList<Item> Items { get; set; }
 
-    public class KnapsackSolution : IKnapsackSolution
+    public double TotalWeight { get; set; }
+
+    public double Value { get; set; }
+
+    public override string ToString()
     {
-        public string Approach { get; set; }
+        var output = new StringBuilder();
+        output.AppendLine(string.Format("{0} | value: {1}, total weight: {2}", Approach, Value, TotalWeight));
+        output.AppendLine(" Products:" + string.Join(", ", Items));
 
-        public IList<Item> Items { get; set; }
-
-        public double TotalWeight { get; set; }
-
-        public double Value { get; set; }
-
-        public override string ToString()
-        {
-            var output = new StringBuilder();
-            output.AppendLine(string.Format("{0} | value: {1}, total weight: {2}", this.Approach, this.Value, this.TotalWeight));
-            output.AppendLine(" Products:" + string.Join(", ", this.Items));
-
-            return output.ToString();
-        }
+        return output.ToString();
     }
 }

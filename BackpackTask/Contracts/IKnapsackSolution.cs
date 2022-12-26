@@ -1,17 +1,14 @@
-﻿namespace Knapsack.Contracts
+﻿using BackpackTask.Utils;
+
+namespace BackpackTask.Contracts;
+
+public interface IKnapsackSolution
 {
-    using System.Collections.Generic;
+    string Approach { get; set; }
 
-    using Knapsack.Utils;
+    IList<Item> Items { get; set; }
 
-    public interface IKnapsackSolution
-    {
-        string Approach { get; set; }
+    double TotalWeight { get; set; }
 
-        IList<Item> Items { get; set; }
-
-        double TotalWeight { get; set; }
-
-        double Value { get; set; }
-    }
+    double Value { get; set; }
 }

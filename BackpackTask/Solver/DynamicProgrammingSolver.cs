@@ -1,63 +1,51 @@
-﻿namespace Knapsack.Solvers
+﻿using BackpackTask.Utils;
+
+namespace BackpackTask.Solver;
+
+public class DynamicProgrammingSolver : KnapsackSolver
 {
-    using System;
-    using System.Collections.Generic;
+    private double[,] table;
 
-    using Knapsack.Utils;
-
-    public class DynamicProgrammingSolver : KnapsackSolver
+    public DynamicProgrammingSolver(IList<Item> items, int capacity)
+        : base(items, capacity)
     {
-        private double[,] table;
+    }
 
-        public DynamicProgrammingSolver(IList<Item> items, int capacity)
-            : base(items, capacity)
-        {
-        }
+    public override KnapsackSolution Solve()
+    {
+        FillTable();
+        var solution = TakeItems();
+        solution.Approach = "Dynamic Programming";
 
-        public override KnapsackSolution Solve()
-        {
-            this.FillTable();
-            var solution = this.TakeItems();
-            solution.Approach = "Dynamic Programming";
+        return solution;
+    }
 
-            return solution;
-        }
-
-        private KnapsackSolution TakeItems()
-        {
-            var best = new KnapsackSolution() { Items = new List<Item>() };
-            for (int row = this.Items.Count, col = this.Capacity; row > 0; row--)
+    private KnapsackSolution TakeItems()
+    {
+        var best = new KnapsackSolution { Items = new List<Item>() };
+        for (int row = Items.Count, col = Capacity; row > 0; row--)
+            if (table[row, col] != table[row - 1, col])
             {
-                if (this.table[row, col] != this.table[row - 1, col])
-                {
-                    best.Items.Add(this.Items[row - 1]);
-                    col -= this.Items[row - 1].Weight;
-                }
+                best.Items.Add(Items[row - 1]);
+                col -= Items[row - 1].Weight;
             }
 
-            best.TotalWeight = this.GetWeight(best.Items);
-            best.Value = this.GetValue(best.Items);
-            return best;
-        }
+        best.TotalWeight = GetWeight(best.Items);
+        best.Value = GetValue(best.Items);
+        return best;
+    }
 
-        private void FillTable()
+    private void FillTable()
+    {
+        table = new double[Items.Count + 1, Capacity + 1];
+        for (var row = 1; row <= Items.Count; row++)
         {
-            this.table = new double[this.Items.Count + 1, this.Capacity + 1];
-            for (int row = 1; row <= this.Items.Count; row++)
-            {
-                var item = this.Items[row - 1];
-                for (int col = 0; col <= this.Capacity; col++)
-                {
-                    if (item.Weight > col)
-                    {
-                        this.table[row, col] = this.table[row - 1, col];
-                    }
-                    else
-                    {
-                        this.table[row, col] = Math.Max(this.table[row - 1, col], this.table[row - 1, col - item.Weight] + item.Value);
-                    }
-                }
-            }
+            var item = Items[row - 1];
+            for (var col = 0; col <= Capacity; col++)
+                if (item.Weight > col)
+                    table[row, col] = table[row - 1, col];
+                else
+                    table[row, col] = Math.Max(table[row - 1, col], table[row - 1, col - item.Weight] + item.Value);
         }
     }
 }

@@ -1,31 +1,25 @@
-﻿namespace Knapsack.Utils
+﻿using Wintellect.PowerCollections;
+
+namespace BackpackTask.Utils;
+
+public class PriorityQueue<T> where T : IComparable<T>
 {
-    using System;
+    private readonly OrderedBag<T> queue;
 
-    using Wintellect.PowerCollections;
-
-    public class PriorityQueue<T> where T : IComparable<T>
+    public PriorityQueue()
     {
-        private readonly OrderedBag<T> queue;
+        queue = new OrderedBag<T>();
+    }
 
-        public PriorityQueue()
-        {
-            this.queue = new OrderedBag<T>();
-        }
+    public int Count => queue.Count;
 
-        public int Count
-        {
-            get { return this.queue.Count; }
-        }
+    public void Enqueue(T element)
+    {
+        queue.Add(element);
+    }
 
-        public void Enqueue(T element)
-        {
-            this.queue.Add(element);
-        }
-
-        public T Dequeue()
-        {
-            return this.queue.RemoveFirst();
-        }
+    public T Dequeue()
+    {
+        return queue.RemoveFirst();
     }
 }
