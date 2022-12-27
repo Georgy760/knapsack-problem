@@ -16,12 +16,12 @@ public abstract class KnapsackSolver
 
     public abstract KnapsackSolution Solve();
 
-    public double GetWeight(IList<Item> items)
+    public int GetWeight(IList<Item> items)
     {
         return items.Sum(i => i.Weight);
     }
 
-    public double GetValue(IList<Item> items)
+    public int GetValue(IList<Item> items)
     {
         return items.Sum(i => i.Value);
     }

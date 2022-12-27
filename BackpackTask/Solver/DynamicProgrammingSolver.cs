@@ -4,7 +4,7 @@ namespace BackpackTask.Solver;
 
 public class DynamicProgrammingSolver : KnapsackSolver
 {
-    private double[,] table;
+    private int[,] table;
 
     public DynamicProgrammingSolver(IList<Item> items, int capacity)
         : base(items, capacity)
@@ -37,7 +37,7 @@ public class DynamicProgrammingSolver : KnapsackSolver
 
     private void FillTable()
     {
-        table = new double[Items.Count + 1, Capacity + 1];
+        table = new int[Items.Count + 1, Capacity + 1];
         for (var row = 1; row <= Items.Count; row++)
         {
             var item = Items[row - 1];

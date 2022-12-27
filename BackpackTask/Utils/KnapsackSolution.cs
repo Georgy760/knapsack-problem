@@ -9,9 +9,9 @@ public class KnapsackSolution : IKnapsackSolution
 
     public IList<Item> Items { get; set; }
 
-    public double TotalWeight { get; set; }
+    public int TotalWeight { get; set; }
 
-    public double Value { get; set; }
+    public int Value { get; set; }
 
     public override string ToString()
     {

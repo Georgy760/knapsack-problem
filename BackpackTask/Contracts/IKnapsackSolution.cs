@@ -8,7 +8,7 @@ public interface IKnapsackSolution
 
     IList<Item> Items { get; set; }
 
-    double TotalWeight { get; set; }
+    int TotalWeight { get; set; }
 
-    double Value { get; set; }
+    int Value { get; set; }
 }

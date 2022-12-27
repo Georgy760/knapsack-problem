@@ -42,8 +42,7 @@ public class EntryPoint
 
         Console.ForegroundColor = ConsoleColor.Green;
         Console.WriteLine("Max Capacity is {0}", input.Capacity);
-        //Console.WriteLine("Expected result is {0}", input.ExpectedResult);
-        Console.ForegroundColor = ConsoleColor.White;
+        Console.ForegroundColor = ConsoleColor.Black;
         var sw = new Stopwatch();
 
         sw.Start();
@@ -68,6 +67,7 @@ public class EntryPoint
         Console.WriteLine($"DataSize: {dataSize}");
 
         var maxCapacity = int.Parse(stringData[0]);
+        Console.WriteLine($"MaxCapacity: {maxCapacity}\n");
 
         line = sr.ReadLine();
 
@@ -78,7 +78,7 @@ public class EntryPoint
             stringData = line.Split(" ");
             var item = new Item(i.ToString(), int.Parse(stringData[0]), int.Parse(stringData[1]));
             items.Add(item);
-            Console.WriteLine($"\nI is: {i}\n");
+            //Console.WriteLine($"\nI is: {i}\n");
             
             i++;
             line = sr.ReadLine();

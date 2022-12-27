@@ -2,21 +2,17 @@
 
 public class Item
 {
-    public Item()
-    {
-    }
-
     public Item(string name, int value, int weight)
     {
         Name = name;
         Value = value;
         Weight = weight;
-        Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.WriteLine("Added new item:" +
-                          $"\nName: {Name}" +
-                          $"\nValue: {Value}" +
-                          $"\nWeight: {Weight}");
-        Console.ForegroundColor = ConsoleColor.White;
+        Console.ForegroundColor = ConsoleColor.Blue;
+        // Console.WriteLine("Added new item:" + 
+        //                   $"\nName: {Name}" + 
+        //                   $"\nValue: {Value}" +
+        //                   $"\nWeight: {Weight}\n");
+        Console.ForegroundColor = ConsoleColor.Black;
     }
 
     public string Name { get; set; }
